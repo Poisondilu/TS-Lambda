@@ -10,5 +10,8 @@ const lambdaStack = new LambdaStack(app, 'LambdaStack', {
 });
 
 new ApiStack(app, 'ApiStack', {
-    coffeeLambdaIntegration: lambdaStack.coffeeLambdaIntegration
+    createCoffeeIntegration: lambdaStack.createCoffeeIntegration,
+    getCoffeeIntegration: lambdaStack.getCoffeeIntegration,
+    updateCoffeeIntegration: lambdaStack.updateCoffeeIntegration,
+    deleteCoffeeIntegration: lambdaStack.deleteCoffeeIntegration
 });
