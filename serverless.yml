@@ -1,0 +1,83 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: jobsitydev
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: coffeeapp
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: coffee
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  stage: ${opt:stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:Scan
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: arn:aws:dynamodb:${self:provider.region}:*:table/CoffeeOrders-${self:provider.stage}
+
+functions:
+  createCoffee:
+    handler: src/services/createCoffee.handler
+    environment:
+      COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
+    events:
+      - http:
+          path: coffee
+          method: post
+
+  getCoffee:
+    handler: src/services/getCoffee.handler
+    environment:
+      COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
+    events:
+      - http:
+          path: coffee
+          method: get
+
+  updateCoffee:
+    handler: src/services/updateCoffee.handler
+    environment:
+      COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
+    events:
+      - http:  
+          path: coffee  
+          method: put  
+
+  deleteCoffee:  
+    handler: src/services/deleteCoffee.handler
+    environment:
+      COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
+    events:
+      - http:
+          path: coffee
+          method: delete
+resources:
+  Resources:
+    CoffeeTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: CoffeeOrders-${self:provider.stage}
+        AttributeDefinitions:
+          - AttributeName: OrderId
+            AttributeType: S
+          - AttributeName: CustomerName
+            AttributeType: S
+        KeySchema:
+          - AttributeName: OrderId
+            KeyType: HASH
+          - AttributeName: CustomerName
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+
+plugins:
+  - serverless-offline
+  - serverless-iam-roles-per-function
+  - serverless-create-global-dynamodb-table
+  - serverless-prune-plugin
