@@ -1,0 +1,36 @@
+{
+  "name": "ts-lambda",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.152",
+    "@types/node": "^24.3.0",
+    "aws-cdk": "^2.1025.0",
+    "aws-cdk-lib": "^2.212.0",
+    "constructs": "^10.4.2",
+    "serverless-create-global-dynamodb-table": "^3.1.1",
+    "serverless-iam-roles-per-function": "^3.2.0",
+    "serverless-offline": "^14.4.0",
+    "serverless-prune-plugin": "^2.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@dazn/lambda-powertools-cloudwatchevents-client": "^1.28.1",
+    "@dazn/lambda-powertools-correlation-ids": "^1.28.1",
+    "@dazn/lambda-powertools-dynamodb-client": "^1.28.1",
+    "@dazn/lambda-powertools-kinesis-client": "^1.28.1",
+    "@dazn/lambda-powertools-lambda-client": "^1.28.1",
+    "@dazn/lambda-powertools-logger": "^1.28.1",
+    "@dazn/lambda-powertools-pattern-basic": "^1.29.0",
+    "@dazn/lambda-powertools-sns-client": "^1.28.1",
+    "@dazn/lambda-powertools-sqs-client": "^1.28.1"
+  }
+}
